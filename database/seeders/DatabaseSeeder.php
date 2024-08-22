@@ -2,21 +2,24 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
+    public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // 外部キー制約を無効にする
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $this->call([
+            UserSeeder::class,
+            RecipeSeeder::class,
+            IngredientSeeder::class,
+            StockSeeder::class,
+        ]);
+
+        // 外部キー制約を再び有効にする
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }
