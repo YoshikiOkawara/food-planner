@@ -11,31 +11,35 @@ class StockController extends Controller
 {
     public function index()
     {
-        $stocks = Stock::with('user', 'ingredient')->get();
-        $today = now()->format('Y-m-d');
-        
+        $stocks = Stock::all(); // すべての在庫データを取得
+        $today = now()->format('Y-m-d'); // 今日の日付を取得
         return view('stocks.index', compact('stocks', 'today'));
     }
 
     public function create()
     {
         $users = User::all(); // 全てのユーザーを取得
-        $ingredients = Ingredient::all(); // 全ての食材を取得
-
-        return view('stocks.create', compact('users', 'ingredients'));
+        return view('stocks.create', compact('users'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'ingredient_id' => 'required|exists:ingredients,id',
+            'ingredient_name' => 'required|string',
             'quantity' => 'required|integer',
             'expiration_date' => 'required|date',
             'best_before_date' => 'required|date',
         ]);
 
-        Stock::create($request->all());
+        // 在庫データを作成
+        Stock::create([
+            'user_id' => $request->input('user_id'),
+            'ingredient_name' => $request->input('ingredient_name'),
+            'quantity' => $request->input('quantity'),
+            'expiration_date' => $request->input('expiration_date'),
+            'best_before_date' => $request->input('best_before_date'),
+        ]);
 
         return redirect()->route('stocks.index');
     }
@@ -43,22 +47,26 @@ class StockController extends Controller
     public function edit(Stock $stock)
     {
         $users = User::all();
-        $ingredients = Ingredient::all();
-
-        return view('stocks.edit', compact('stock', 'users', 'ingredients'));
+        return view('stocks.edit', compact('stock', 'users'));
     }
 
     public function update(Request $request, Stock $stock)
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'ingredient_id' => 'required|exists:ingredients,id',
+            'ingredient_name' => 'required|string',
             'quantity' => 'required|integer',
             'expiration_date' => 'required|date',
             'best_before_date' => 'required|date',
         ]);
 
-        $stock->update($request->all());
+        $stock->update([
+            'user_id' => $request->input('user_id'),
+            'ingredient_name' => $request->input('ingredient_name'),
+            'quantity' => $request->input('quantity'),
+            'expiration_date' => $request->input('expiration_date'),
+            'best_before_date' => $request->input('best_before_date'),
+        ]);
 
         return redirect()->route('stocks.index');
     }
@@ -66,15 +74,13 @@ class StockController extends Controller
     public function destroy(Stock $stock)
     {
         $stock->delete();
-
         return redirect()->route('stocks.index');
     }
 
     public function management()
     {
-        $stocks = Stock::with('user', 'ingredient')->get(); // 在庫データをすべて取得
+        $stocks = Stock::all(); // すべての在庫データを取得
         $today = now()->format('Y-m-d'); // 今日の日付を取得
-
         return view('stocks.management', compact('stocks', 'today'));
     }
 }

@@ -8,24 +8,14 @@
     @endif
 
     @if(isset($recipes) && count($recipes) > 0)
-        <ul>
+        <div class="recipe-list">
             @foreach($recipes as $recipe)
-                <li>
+                <div class="recipe-card">
                     <h3>{{ $recipe['title'] }}</h3>
-                    @if(isset($recipe['readyInMinutes']))
-                        <p>準備時間: {{ $recipe['readyInMinutes'] }} 分</p>
-                    @else
-                        <p>準備時間: 情報なし</p>
-                    @endif
-                    @if(isset($recipe['servings']))
-                        <p>提供人数: {{ $recipe['servings'] }} 人分</p>
-                    @else
-                        <p>提供人数: 情報なし</p>
-                    @endif
                     <a href="{{ route('recipes.details', $recipe['id']) }}">詳細を見る</a>
-                </li>
+                </div>
             @endforeach
-        </ul>
+        </div>
     @else
         <p>レシピが見つかりませんでした。</p>
     @endif

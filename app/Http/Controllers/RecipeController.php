@@ -52,9 +52,12 @@ class RecipeController extends Controller
     {
         // レシピを取得（存在しない場合は404エラー）
         $recipe = Recipe::findOrFail($id);
-
+    
+        // Spoonacular API で栄養素情報を取得
+        $nutritionalInfo = $this->spoonacularService->getNutritionalInfo($recipe->id);
+    
         // レシピの詳細を表示するビューにデータを渡す
-        return view('recipes.show', compact('recipe'));
+        return view('recipes.show', compact('recipe', 'nutritionalInfo'));
     }
 
     // レシピ編集フォームを表示
@@ -139,11 +142,11 @@ class RecipeController extends Controller
     {
         $query = $request->input('query');
         
-        // Spoonacular API でレシピを検索
-        $response = $this->spoonacularService->searchRecipes($query);
-
+        // Spoonacular API でレシピを検索し、結果を20件取得するように設定
+        $response = $this->spoonacularService->searchRecipes($query, 20);
+    
         $recipes = $response['results'] ?? []; // 'results' キーが存在する場合はレシピの配列を取得
-
+    
         return view('recipes.search_results', compact('recipes'));
     }
 

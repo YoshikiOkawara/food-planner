@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 // SpoonacularのAPIキー
-const apiKey = '2b48d426fe2446c6a4c085c2d6a1e3fb';
+const apiKey = config('services.SPOONACULAR.key');
 const apiUrl = 'https://api.spoonacular.com/food/ingredients/search'; // エンドポイント
 
 // 例: 食品名を設定

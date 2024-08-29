@@ -19,16 +19,12 @@
             @endif
         </div>
 
-        <!-- 食材選択 -->
+        <!-- 食材入力 -->
         <div class="form-group">
-            <label for="ingredient_id">食材</label>
-            <select name="ingredient_id" class="form-control" id="ingredient_id" required>
-                @foreach($ingredients as $ingredient)
-                    <option value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>
-                @endforeach
-            </select>
-            @if ($errors->has('ingredient_id'))
-                <span class="text-danger">{{ $errors->first('ingredient_id') }}</span>
+            <label for="ingredient_name">食材名</label>
+            <input type="text" name="ingredient_name" class="form-control" id="ingredient_name" required>
+            @if ($errors->has('ingredient_name'))
+                <span class="text-danger">{{ $errors->first('ingredient_name') }}</span>
             @endif
         </div>
 
@@ -41,7 +37,7 @@
             @endif
         </div>
 
-        <!-- 消費期限入力 -->
+        <!-- 期限入力 -->
         <div class="form-group">
             <label for="expiration_date">消費期限</label>
             <input type="date" name="expiration_date" class="form-control" id="expiration_date" required>
@@ -50,7 +46,7 @@
             @endif
         </div>
 
-        <!-- 賞味期限入力 -->
+        <!-- 賞味期限 -->
         <div class="form-group">
             <label for="best_before_date">賞味期限</label>
             <input type="date" name="best_before_date" class="form-control" id="best_before_date" required>

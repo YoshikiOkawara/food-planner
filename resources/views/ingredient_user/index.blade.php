@@ -21,21 +21,21 @@
         </thead>
         <tbody>
             @foreach($ingredientUsers as $ingredientUser)
-                @foreach($ingredientUser->ingredients as $ingredient)
-                    <tr>
-                        <td>{{ $ingredientUser->name }}</td>
-                        <td>{{ $ingredientUser->allergy_info }}</td>
-                        <td>{{ $ingredientUser->preference_info }}</td>
-                        <td>
-                            <a href="{{ route('ingredient_user.edit', $ingredientUser->id) }}" class="btn btn-warning">編集</a>
-                            <form action="{{ route('ingredient_user.destroy', [$ingredientUser->id, $ingredient->id]) }}" method="POST" style="display:inline;">
+                <tr>
+                    <td>{{ $ingredientUser->name }}</td>
+                    <td>{{ $ingredientUser->allergy_info }}</td>
+                    <td>{{ $ingredientUser->preference_info }}</td>
+                    <td>
+                        <a href="{{ route('ingredient_user.edit', $ingredientUser->id) }}" class="btn btn-warning">編集</a>
+                        @if ($ingredientUser->id !== auth()->id())
+                            <form action="{{ route('ingredient_user.destroy', $ingredientUser->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger" onclick="return confirm('本当に削除しますか？')">削除</button>
                             </form>
-                        </td>
-                    </tr>
-                @endforeach
+                        @endif
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>

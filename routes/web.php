@@ -12,7 +12,10 @@ use App\Http\Controllers\RatingController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\RecipeSearchController;
 use App\Http\Controllers\NutritionalInfoController;
+use App\Http\Controllers\MealPlanController;
 use Illuminate\Support\Facades\Route;
+
+Route::resource('meal_plans', MealPlanController::class);
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,9 +40,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/ingredient-user', [IngredientUserController::class, 'index'])->name('ingredient_user.index');
     Route::get('/ingredient-user/create', [IngredientUserController::class, 'create'])->name('ingredient_user.create');
     Route::post('/ingredient-user', [IngredientUserController::class, 'store'])->name('ingredient_user.store');
-    Route::get('/ingredient-user/{user}/edit', [IngredientUserController::class, 'edit'])->name('ingredient_user.edit');
-    Route::put('/ingredient-user/{user}', [IngredientUserController::class, 'update'])->name('ingredient_user.update');
-    Route::delete('/ingredient-user/{user}/{ingredient}', [IngredientUserController::class, 'destroy'])->name('ingredient_user.destroy');
+    Route::get('/ingredient-user/{userId}/edit', [IngredientUserController::class, 'edit'])->name('ingredient_user.edit');
+    Route::put('/ingredient-user/{userId}', [IngredientUserController::class, 'update'])->name('ingredient_user.update');
+    Route::delete('/ingredient-user/{userId}', [IngredientUserController::class, 'destroy'])->name('ingredient_user.destroy');
 
     Route::get('/daily-foods/create', [DailyFoodController::class, 'create'])->name('daily_foods.create');
     Route::post('/daily-foods', [DailyFoodController::class, 'store'])->name('daily_foods.store');
@@ -60,9 +63,14 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/nutrition/calculate', [NutritionalInfoController::class, 'calculate'])->name('nutrition.calculate');
     Route::get('/nutrition', [NutritionalInfoController::class, 'index'])->name('nutrition.index');
-    Route::get('/nutrition/{id}', [NutritionalInfoController::class, 'show'])->name('nutrition.show');
+    Route::get('/nutrition/create', [NutritionalInfoController::class, 'create'])->name('nutrition.create');
+    Route::post('/nutrition/store', [NutritionalInfoController::class, 'store'])->name('nutrition.store');
+    Route::get('/nutrition/{id}/show', [NutritionalInfoController::class, 'show'])->name('nutrition.show');
     Route::get('/nutrition/{id}/edit', [NutritionalInfoController::class, 'edit'])->name('nutrition.edit');
     Route::put('/nutrition/{id}', [NutritionalInfoController::class, 'update'])->name('nutrition.update');
+    Route::delete('/nutrition/{id}', [NutritionalInfoController::class, 'destroy'])->name('nutrition.destroy');
+
+    Route::resource('meal_plans', MealPlanController::class);
 });
 
 require __DIR__.'/auth.php';

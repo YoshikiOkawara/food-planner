@@ -25,8 +25,8 @@
                     $isBestBefore = $stock->best_before_date && $stock->best_before_date < $today;
                 @endphp
                 <tr class="{{ $isExpired ? 'table-danger' : ($isBestBefore ? 'table-warning' : '') }}">
-                    <td>{{ $stock->user->name }}</td>
-                    <td>{{ $stock->ingredient->name }}</td>
+                    <td>{{ $stock->user->name ?? 'ユーザー情報なし' }}</td>
+                    <td>{{ $stock->ingredient_name ?? '食材情報なし' }}</td>
                     <td>{{ $stock->quantity }}</td>
                     <td>{{ $stock->expiration_date ? $stock->expiration_date->format('Y-m-d') : 'N/A' }}</td>
                     <td>{{ $stock->best_before_date ? $stock->best_before_date->format('Y-m-d') : 'N/A' }}</td>
@@ -47,13 +47,13 @@
     <h3 class="mt-5">アラート</h3>
     <ul class="list-group">
         @foreach($stocks as $stock)
-            @if($stock->expiration_date < $today)
+            @if($stock->expiration_date && $stock->expiration_date < $today)
                 <li class="list-group-item list-group-item-danger">
-                    Expired: {{ $stock->ingredient->name }} ({{ $stock->expiration_date->format('Y-m-d') }})
+                    <i class="fas fa-exclamation-triangle"></i> Expired: {{ $stock->ingredient_name ?? '食材情報なし' }} ({{ $stock->expiration_date->format('Y-m-d') }})
                 </li>
-            @elseif($stock->best_before_date < $today)
+            @elseif($stock->best_before_date && $stock->best_before_date < $today)
                 <li class="list-group-item list-group-item-warning">
-                    Best Before: {{ $stock->ingredient->name }} ({{ $stock->best_before_date->format('Y-m-d') }})
+                    <i class="fas fa-calendar-check"></i> Best Before: {{ $stock->ingredient_name ?? '食材情報なし' }} ({{ $stock->best_before_date->format('Y-m-d') }})
                 </li>
             @endif
         @endforeach

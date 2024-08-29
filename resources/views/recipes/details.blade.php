@@ -3,7 +3,7 @@
 @section('content')
     <div class="recipe-details">
         <!-- レシピタイトル -->
-        @if(is_array($recipeDetails) && isset($recipeDetails['title']))
+        @if(isset($recipeDetails) && is_array($recipeDetails) && isset($recipeDetails['title']))
             <h1 class="recipe-title">{{ $recipeDetails['title'] }}</h1>
 
             <!-- レシピ画像 -->

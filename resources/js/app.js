@@ -1,6 +1,6 @@
 // 取得したAPIキーとIDを変数に格納
 const appId = '2e51e67c';
-const apiKey = '3a559ad46f2fc201e0b6bbda9aba524f';
+const apiKey = config('services.SPOONACULAR.key');
 const apiUrl = 'https://trackapi.nutritionix.com/v2/search/instant'; // 正しいエンドポイントに変更
 
 document.getElementById('searchBtn').addEventListener('click', function() {

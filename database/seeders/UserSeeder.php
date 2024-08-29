@@ -11,23 +11,23 @@ class UserSeeder extends Seeder
     public function run()
     {
         // 全データを削除
-        User::truncate();
+        User::query()->delete();
 
         // 新しいユーザーの作成
         User::create([
             'name' => 'John Doe',
             'email' => 'john@example.com',
             'password' => Hash::make('password'),
-            'allergy' => 'Peanuts',
-            'preference' => 'Vegan'
+            'allergy_info' => 'Peanuts',
+            'preference_info' => 'Vegan'
         ]);
 
         User::create([
             'name' => 'Jane Smith',
             'email' => 'jane@example.com',
             'password' => Hash::make('password'),
-            'allergy' => 'None',
-            'preference' => 'Vegetarian'
+            'allergy_info' => 'None',
+            'preference_info' => 'Vegetarian'
         ]);
     }
 }
