@@ -11,15 +11,9 @@ class DailyFood extends Model
 
     protected $fillable = [
         'user_id',
-        'ingredient_id',
         'amount',
         'meal_time', // 食事の時間帯を追加
     ];
-
-    public function ingredient()
-    {
-        return $this->belongsTo(Ingredient::class);
-    }
 
     public function user()
     {

@@ -35,7 +35,7 @@ class User extends Authenticatable
     
     public function likes()
     {
-    return $this->hasMany(Like::class);
+        return $this->hasMany(Like::class);
     }
     
     public function recipes(): HasMany

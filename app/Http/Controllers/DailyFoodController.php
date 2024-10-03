@@ -22,12 +22,11 @@ class DailyFoodController extends Controller
         $validated = $request->validate([
             'ingredient_id' => 'required|exists:ingredients,id',
             'amount' => 'required|numeric|min:0',
-            'meal_time' => 'required|string|in:朝食,昼食,夕食',
+            'meal_time' => 'required|string|in:朝食,昼食,夕食,間食',
         ]);
 
         DailyFood::create([
             'user_id' => Auth::id(),
-            'ingredient_id' => $validated['ingredient_id'],
             'amount' => $validated['amount'],
             'meal_time' => $validated['meal_time'],
         ]);
@@ -41,7 +40,7 @@ class DailyFoodController extends Controller
         $userId = Auth::id();
         $dailyFoods = DailyFood::where('user_id', $userId)->get();
 
-        $meals = ['朝食', '昼食', '夕食'];
+        $meals = ['朝食', '昼食', '夕食', '間食'];
         $totals = [];
 
         foreach ($meals as $meal) {
